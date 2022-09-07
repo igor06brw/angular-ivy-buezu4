@@ -1,0 +1,40 @@
+<div>All kind of products</div>
+<div>
+  <div>
+    <button (click)="onAdd()">Add</button>
+  </div>
+
+  <select (change)="onSelected($any($event.target).value)">
+    <option>- Display All -</option>
+    <option *ngFor="let category of categories$" [value]="category.id">
+      {{ category.description }}
+    </option>
+  </select>
+
+  <table *ngIf="products$ | async as products">
+    <thead>
+      <tr>
+        <th>Product Name</th>
+        <th>Category</th>
+        <th>Price</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let product of products"
+        (click)="onSelectedProduct(product.id)"
+        routerLink="/{{ product.id }}"
+      >
+        <td>{{ product.productName }}</td>
+        <td>{{ product.category }}</td>
+        <td>{{ product.price }}</td>
+        <td>{{ product.description }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="errorMessage$ | async as errorMessage">
+  <div>ERROR: {{ errorMessage }}</div>
+</div>
